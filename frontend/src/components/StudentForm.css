@@ -64,3 +64,11 @@
     }
   }
   
+  .error {
+    color: red;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+  
+  
