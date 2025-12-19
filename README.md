@@ -58,6 +58,21 @@ The backend is developed using **Spring Boot** and the frontend is built using *
 | mobile      | VARCHAR(15)       | Contact Number |
 
 **Example MySQL Script:**
+
+S# Full Stack CRUD Assignment
+
+## Candidate Name
+**Shreya Arjugade**
+
+## Project Description
+A full-stack Student Management System using Spring Boot and React.
+
+---
+
+## 🗄️ Database Setup
+
+Run the following commands in your MySQL terminal to set up the environment:
+
 ```sql
 CREATE DATABASE IF NOT EXISTS assignment_db;
 
@@ -70,9 +85,10 @@ CREATE TABLE students (
     course VARCHAR(50),
     mobile VARCHAR(15)
 );
-
+```
 ---
-⚙️ Steps to Set Up and Run the Application
+
+## ⚙️ Steps to Set Up and Run the Application
 
 ### Backend Setup
 
@@ -85,8 +101,8 @@ CREATE TABLE students (
 ```bash
 cd backend
 mvn clean install
-mvn spring-boot:run```
-
+mvn spring-boot:run 
+```
 The backend server will start at:
 http://localhost:8081
 
