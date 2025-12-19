@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { addStudent } from "../services/studentService";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import "./StudentForm.css"
 
-function StudentForm({ refresh }) {
+function StudentForm({ refresh, toast }) {
   const [student, setStudent] = useState({
     name: "",
     email: "",
@@ -19,14 +22,15 @@ function StudentForm({ refresh }) {
     try {
       await addStudent(student);
       refresh();
+      toast.success("Student added successfully!");
       setStudent({ name: "", email: "", course: "", mobile: "" });
     } catch (error) {
-      alert("Invalid input. Please check all fields.");
+      toast.error("Failed to add student. Check inputs.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="student-form" onSubmit={handleSubmit}>
       <input name="name" placeholder="Name" value={student.name} onChange={handleChange} required />
       <input name="email" placeholder="Email" value={student.email} onChange={handleChange} required />
       <input name="course" placeholder="Course" value={student.course} onChange={handleChange} required />

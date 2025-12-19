@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { updateStudent } from "../services/studentService";
+import "./StudentUpdateForm.css";
 
-function StudentUpdateForm({ selectedStudent, refresh, clear }) {
+function StudentUpdateForm({ selectedStudent, refresh, clear, toast }) {
   const [student, setStudent] = useState(null);
 
   useEffect(() => {
@@ -26,22 +27,31 @@ function StudentUpdateForm({ selectedStudent, refresh, clear }) {
       await updateStudent(student.id, student);
       refresh();
       clear();
+      toast.success("Student updated successfully!");
+      setStudent(null);
     } catch (error) {
-      alert("Update failed. Please check inputs.");
+      toast.error("Update failed. Check inputs.");
     }
   };
 
   if (!student) return null;
 
   return (
-    <form onSubmit={handleUpdate}>
-      <h3>Update Student</h3>
-      <input name="name" value={student.name} onChange={handleChange} required />
-      <input name="email" value={student.email} onChange={handleChange} required />
-      <input name="course" value={student.course} onChange={handleChange} required />
-      <input name="mobile" value={student.mobile} onChange={handleChange} required />
-      <button type="submit">Update</button>
-    </form>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <form className="student-update-form" onSubmit={handleUpdate}>
+          <h3>Update Student</h3>
+          <input name="name" value={student.name} onChange={handleChange} required />
+          <input name="email" value={student.email} onChange={handleChange} required />
+          <input name="course" value={student.course} onChange={handleChange} required />
+          <input name="mobile" value={student.mobile} onChange={handleChange} required />
+          <div className="modal-buttons">
+            <button type="submit">Update</button>
+            <button type="button" onClick={clear} className="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

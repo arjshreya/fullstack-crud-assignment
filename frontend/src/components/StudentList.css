@@ -1,26 +1,106 @@
-body {
-    font-family: Arial;
-    background: #121212;
-    color: white;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 10px;
-    border: 1px solid #444;
-  }
-  
-  input {
-    margin: 5px;
-    padding: 8px;
-  }
-  
-  button {
-    padding: 6px 12px;
-    cursor: pointer;
-  }
-  
+/* Table container */
+.student-list-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table styling */
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Table header */
+.student-table th {
+  padding: 12px 15px;
+  background: #4a90e2;
+  color: white;
+  text-align: left;
+}
+
+/* Table cells */
+.student-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect */
+.student-table tr:hover {
+  background: #f1f1f1;
+}
+
+/* Buttons */
+.edit-btn { background: #f0ad4e; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
+.edit-btn:hover { background: #ec971f; }
+.delete-btn { background: #d9534f; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
+.delete-btn:hover { background: #c9302c; }
+.view-btn { background: #5bc0de; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
+.view-btn:hover { background: #31b0d5; }
+
+/* Responsive text */
+@media (max-width: 768px) {
+  .student-table th, .student-table td { padding: 8px 10px; font-size: 0.9rem; }
+  .edit-btn, .delete-btn, .view-btn { padding: 4px 8px; font-size: 0.8rem; }
+}
+
+/* Search wrapper */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px; /* space between suggestions & table */
+}
+
+/* Search form */
+.search-form {
+  display: flex;
+  gap: 5px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.search-form button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #4a90e2;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.search-form button:hover { background-color: #357ab8; }
+
+/* Suggestions dropdown */
+.suggestions-list {
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 180px;
+  overflow-y: auto;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.suggestions-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}

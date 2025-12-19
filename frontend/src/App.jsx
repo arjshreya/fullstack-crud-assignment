@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import StudentList from "./components/StudentList";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 import StudentForm from "./components/StudentForm";
 import StudentUpdateForm from "./components/StudentUpdateForm";
-
-import './App.css'
+import StudentList from "./components/StudentList";
+import "./App.css";
 
 function App() {
-  const [selectedStudent, setSelectedStudent] = useState(null);
   const [reload, setReload] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
-  const refresh = () => setReload(!reload);
+  const triggerReload = () => setReload(!reload);
+  const clearSelection = () => setSelectedStudent(null);
 
-    return (
-    <div>
-      <h1>Student Management</h1>
+  return (
+    <div className="app-container">
+      <header>
+        <h1>Student Management System</h1>
+      </header>
 
-      <StudentForm refresh={refresh} />
+      <main>
+        <div className="form-section">
+          <StudentForm refresh={triggerReload} toast={toast} />
+        </div>
 
-      {selectedStudent && (
-        <StudentUpdateForm
-          selectedStudent={selectedStudent}
-          refresh={refresh}
-          clear={() => setSelectedStudent(null)}
-        />
-      )}
+        <div className="list-section">
+          <StudentList reload={reload} onEdit={setSelectedStudent} toast={toast} />
+        </div>
 
-      <StudentList reload={reload} onEdit={setSelectedStudent} />
+        {/* Update Form Modal */}
+        {selectedStudent && (
+          <StudentUpdateForm
+            selectedStudent={selectedStudent}
+            refresh={triggerReload}
+            clear={clearSelection}
+            toast={toast}
+          />
+        )}
+      </main>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
 
-export default App
+export default App;
