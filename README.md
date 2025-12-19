@@ -85,8 +85,7 @@ CREATE TABLE students (
 ```bash
 cd backend
 mvn clean install
-mvn spring-boot:run
-```
+mvn spring-boot:run```
 
 The backend server will start at:
 http://localhost:8081
@@ -109,15 +108,14 @@ The frontend server will start at:
 http://localhost:5173
 
 📡 Backend API Endpoints
-    -------------------------------------------------------------------------------------
-    | HTTP Method | Endpoint           | Description                                    |
-    | ----------- | ------------------ | ---------------------------------------------- |
-    | GET         | /api/students      | Fetch students (supports pagination & sorting) |
-    | GET         | /api/students/{id} | Fetch a single student by ID                   |
-    | POST        | /api/students      | Add a new student                              |
-    | PUT         | /api/students/{id} | Update student information                     |
-    | DELETE      | /api/students/{id} | Delete a student                               |
-    -------------------------------------------------------------------------------------
+   | HTTP Method | Endpoint           | Description                                    |
+|:-----------:|:----------------- |:---------------------------------------------|
+| GET         | /api/students     | Fetch students (supports pagination & sorting) |
+| GET         | /api/students/{id}| Fetch a single student by ID                   |
+| POST        | /api/students     | Add a new student                              |
+| PUT         | /api/students/{id}| Update student information                     |
+| DELETE      | /api/students/{id}| Delete a student                               |
+
 
 **Pagination & Sorting Parameters:**
 
