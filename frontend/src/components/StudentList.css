@@ -1,10 +1,8 @@
-/* Table container */
 .student-list-container {
   width: 100%;
   overflow-x: auto;
 }
 
-/* Table styling */
 .student-table {
   width: 100%;
   border-collapse: collapse;
@@ -12,7 +10,6 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Table header */
 .student-table th {
   padding: 12px 15px;
   background: #4a90e2;
@@ -20,40 +17,72 @@
   text-align: left;
 }
 
-/* Table cells */
 .student-table td {
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
 }
 
-/* Hover effect */
 .student-table tr:hover {
   background: #f1f1f1;
 }
 
-/* Buttons */
-.edit-btn { background: #f0ad4e; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
-.edit-btn:hover { background: #ec971f; }
-.delete-btn { background: #d9534f; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
-.delete-btn:hover { background: #c9302c; }
-.view-btn { background: #5bc0de; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 5px; }
-.view-btn:hover { background: #31b0d5; }
+.edit-btn { 
+  background: #f0ad4e; 
+  color: white; 
+  border: none; 
+  padding: 6px 10px; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  margin-right: 5px; 
+}
+.edit-btn:hover { 
+  background: #ec971f;
+ }
+.delete-btn {
+   background: #d9534f;
+   color: white; 
+   border: none; 
+   padding: 6px 10px; 
+   border-radius: 6px; 
+   cursor: pointer; 
+   margin-right: 5px;
+  }
+.delete-btn:hover { 
+  background: #c9302c; 
+}
+.view-btn {
+   background: #5bc0de; 
+   color: white; 
+   border: none; 
+   padding: 6px 10px; 
+   border-radius: 6px; 
+   cursor: pointer; 
+   margin-right: 5px; 
+}
+.view-btn:hover { 
+  background: #31b0d5; 
+}
 
-/* Responsive text */
+
 @media (max-width: 768px) {
   .student-table th, .student-table td { padding: 8px 10px; font-size: 0.9rem; }
   .edit-btn, .delete-btn, .view-btn { padding: 4px 8px; font-size: 0.8rem; }
 }
 
-/* Search wrapper */
-.search-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px; /* space between suggestions & table */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-/* Search form */
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
 .search-form {
   display: flex;
   gap: 5px;
@@ -78,10 +107,13 @@
   transition: all 0.2s ease;
 }
 
-.search-form button:hover { background-color: #357ab8; }
+.search-form button:hover { 
+  background-color: #357ab8;
+}
 
-/* Suggestions dropdown */
+
 .suggestions-list {
+
   top: 100%;
   left: 0;
   right: 0;
@@ -103,4 +135,40 @@
 
 .suggestions-list li:hover {
   background-color: #f0f0f0;
+}
+
+
+.sort-wrapper {
+  min-width: 150px;
+}
+
+.sort-wrapper select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }

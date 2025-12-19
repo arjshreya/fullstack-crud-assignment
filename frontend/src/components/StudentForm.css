@@ -1,4 +1,3 @@
-/* Container for the form */
 .student-form {
     background: #ffffff;
     padding: 20px;
@@ -9,14 +8,12 @@
     gap: 12px;
   }
   
-  /* Form heading */
   .student-form h3 {
     margin: 0 0 10px 0;
     color: #4a90e2;
     text-align: center;
   }
   
-  /* Inputs styling */
   .student-form input {
     width: 100%;
     padding: 10px;
@@ -26,7 +23,6 @@
     box-sizing: border-box;
   }
   
-  /* Buttons styling */
   .student-form button {
     padding: 10px 15px;
     border: none;
@@ -37,12 +33,11 @@
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  
+
   .student-form button:hover {
     background: #357ab7;
   }
-  
-  /* Success message */
+
   .student-form .success-msg {
     background: #d4edda;
     color: #155724;
@@ -51,7 +46,6 @@
     text-align: center;
   }
   
-  /* Responsive */
   @media (max-width: 768px) {
     .student-form input {
       font-size: 0.95rem;
@@ -63,7 +57,7 @@
       padding: 8px 12px;
     }
   }
-  
+
   .error {
     color: red;
     font-size: 0.85rem;

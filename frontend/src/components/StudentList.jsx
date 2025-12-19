@@ -10,22 +10,41 @@ function StudentList({ reload, onEdit, toast }) {
   const [viewStudent, setViewStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [page, setPage] = useState(0);
+  const [size] = useState(5);
+  const [sortField, setSortField] = useState("id");
+  const [sortDir, setSortDir] = useState("asc");
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     loadStudents();
-  }, [reload]);
+  }, [reload, page, sortField, sortDir]);
 
   const loadStudents = async () => {
     try {
-      const res = await getStudents();
-      setStudents(res.data);
+      const res = await getStudents(
+        page,
+        size,
+        `${sortField},${sortDir}`
+      );
+      setStudents(res.data || []);
+      setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       toast?.error("Failed to load students.");
       console.error(err);
     }
   };
 
-  // Update suggestions as user types
+  const filteredStudents = (students || []).filter((s) => {
+    if (!searchTerm) return true;
+    const term = searchTerm.toLowerCase();
+    return (
+      s.name.toLowerCase().includes(term) ||
+      String(s.id).includes(term) ||
+      s.course.toLowerCase().includes(term)
+    );
+  });
+
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -35,36 +54,21 @@ function StudentList({ reload, onEdit, toast }) {
       return;
     }
 
-    const matches = students.filter(
-      (s) =>
-        s.name.toLowerCase().includes(term.toLowerCase()) ||
-        String(s.id).includes(term) ||
-        s.course.toLowerCase().includes(term.toLowerCase())
-    );
-
-    setSuggestions(matches.slice(0, 5)); // show top 5
+    const matches = filteredStudents.slice(0, 5);
+    setSuggestions(matches);
   };
 
-  // Suggestion clicked
   const handleSuggestionClick = (student) => {
     setSearchTerm(student.name);
     setSuggestions([]);
+    setPage(0);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setSuggestions([]); // hide suggestions on submit
+    setSuggestions([]);
+    setPage(0);
   };
-
-  const filteredStudents = students.filter((s) => {
-    if (!searchTerm) return true;
-    const term = searchTerm.toLowerCase();
-    return (
-      s.name.toLowerCase().includes(term) ||
-      String(s.id).includes(term) ||
-      s.course.toLowerCase().includes(term)
-    );
-  });
 
   const handleDelete = async (id) => {
     try {
@@ -79,29 +83,49 @@ function StudentList({ reload, onEdit, toast }) {
 
   return (
     <div className="student-list-container">
-      {/* Search Input + Suggestions */}
-      <div className="search-wrapper">
-        <form onSubmit={handleSearchSubmit} className="search-form">
-          <input
-            type="text"
-            placeholder="Search by Name, ID, or Course"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onBlur={() => setTimeout(() => setSuggestions([]), 100)}
-            className="search-input"
-          />
-          <button type="submit">Search</button>
-        </form>
+      
+      <div className="controls">
+        
+        <div className="search-wrapper">
+          <form onSubmit={handleSearchSubmit} className="search-form">
+            <input
+              type="text"
+              placeholder="Search by Name, ID, or Course"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onBlur={() => setTimeout(() => setSuggestions([]), 100)}
+              className="search-input"
+            />
+            <button type="submit">Search</button>
+          </form>
 
-        {suggestions.length > 0 && (
-          <ul className="suggestions-list">
-            {suggestions.map((s) => (
-              <li key={s.id} onClick={() => handleSuggestionClick(s)}>
-                {s.name} - {s.course} (ID: {s.id})
-              </li>
-            ))}
-          </ul>
-        )}
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((s) => (
+                <li key={s.id} onClick={() => handleSuggestionClick(s)}>
+                  {s.name} - {s.course} (ID: {s.id})
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="sort-wrapper">
+          <select
+            value={`${sortField},${sortDir}`}
+            onChange={(e) => {
+              const [field, dir] = e.target.value.split(",");
+              setSortField(field);
+              setSortDir(dir);
+              setPage(0);
+            }}
+          >
+            <option value="id,asc">ID ↑</option>
+            <option value="id,desc">ID ↓</option>
+            <option value="name,asc">Name ↑</option>
+            <option value="name,desc">Name ↓</option>
+          </select>
+        </div>
       </div>
 
       {/* Student Table */}
@@ -131,10 +155,7 @@ function StudentList({ reload, onEdit, toast }) {
                 >
                   View
                 </button>
-                <button
-                  className="edit-btn"
-                  onClick={() => onEdit(student)}
-                >
+                <button className="edit-btn" onClick={() => onEdit(student)}>
                   Edit
                 </button>
                 <button
@@ -149,7 +170,24 @@ function StudentList({ reload, onEdit, toast }) {
         </tbody>
       </table>
 
-      {/* View Modal */}
+      <div className="pagination">
+        <button
+          disabled={page === 0}
+          onClick={() => setPage((prev) => prev - 1)}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page + 1} of {totalPages}
+        </span>
+        <button
+          disabled={page + 1 === totalPages}
+          onClick={() => setPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
+
       {viewStudent && (
         <StudentDetails
           student={viewStudent}
@@ -157,7 +195,6 @@ function StudentList({ reload, onEdit, toast }) {
         />
       )}
 
-      {/* Delete Confirmation */}
       {deleteId && (
         <DeleteConfirm
           message="Are you sure?"
