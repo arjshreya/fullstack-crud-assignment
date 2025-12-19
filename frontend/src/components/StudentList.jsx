@@ -197,7 +197,7 @@ function StudentList({ reload, onEdit, toast }) {
 
       {deleteId && (
         <DeleteConfirm
-          message="Are you sure?"
+          message="Are you sure you want to delete?"
           onConfirm={() => handleDelete(deleteId)}
           onCancel={() => setDeleteId(null)}
         />
